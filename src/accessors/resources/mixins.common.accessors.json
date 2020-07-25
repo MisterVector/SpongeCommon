@@ -168,7 +168,12 @@
     "world.server.EntityTrackerAccessor",
     "world.server.ServerWorldAccessor",
     "world.spawner.AbstractSpawnerAccessor",
-    "world.storage.SaveHandlerAccessor"
+    "world.storage.SaveHandlerAccessor",
+      "command.arguments.EntitySelectorParserAccessor",
+    "advancements.criterion.MinMaxBounds_FloatBoundAccessor",
+    "advancements.criterion.MinMaxBounds_IntBoundAccessor",
+      "command.arguments.EntityOptionsAccessor",
+    "command.arguments.EntityOptions_OptionHandlerAccessor"
   ],
   "server": [
     "server.dedicated.DedicatedServerAccessor",

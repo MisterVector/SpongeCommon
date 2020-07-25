@@ -22,30 +22,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.mixin.api.mcp.entity;
+package org.spongepowered.common.command.selector;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.util.text.ITextComponent;
-import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.adventure.SpongeAdventure;
-import org.spongepowered.common.bridge.ResourceKeyBridge;
+import com.mojang.brigadier.StringReader;
+import net.minecraft.command.arguments.EntitySelectorParser;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.spongepowered.api.command.selector.Selector;
 
-@Mixin(net.minecraft.entity.EntityType.class)
-public abstract class EntityTypeMixin_API<T extends Entity> implements EntityType<T> {
+public class SpongeSelectorFactory implements Selector.Factory {
 
-    @Shadow public abstract ITextComponent shadow$getName();
+    public static final SpongeSelectorFactory INSTANCE = new SpongeSelectorFactory();
 
-    @Override
-    public ResourceKey getKey() {
-        return ((ResourceKeyBridge) this).bridge$getKey();
+    public static Selector.Builder createBuilder() {
+        return (Selector.Builder) new EntitySelectorParser(new StringReader(""));
+    }
+
+    private SpongeSelectorFactory() {
     }
 
     @Override
-    public Component asComponent() {
-        return SpongeAdventure.asAdventure(this.shadow$getName());
+    @NonNull
+    public Selector parse(@NonNull final String string) throws IllegalArgumentException {
+        try {
+            return (Selector) new EntitySelectorParser(new StringReader(string)).parse();
+        } catch (final Exception ex) {
+            throw new IllegalArgumentException(ex.getMessage(), ex);
+        }
     }
+
 }

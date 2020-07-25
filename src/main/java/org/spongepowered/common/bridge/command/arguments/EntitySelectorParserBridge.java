@@ -22,30 +22,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.mixin.api.mcp.entity;
+package org.spongepowered.common.bridge.command.arguments;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.util.text.ITextComponent;
-import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.adventure.SpongeAdventure;
-import org.spongepowered.common.bridge.ResourceKeyBridge;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import org.spongepowered.api.command.selector.SelectorType;
+import org.spongepowered.api.util.Tristate;
 
-@Mixin(net.minecraft.entity.EntityType.class)
-public abstract class EntityTypeMixin_API<T extends Entity> implements EntityType<T> {
+public interface EntitySelectorParserBridge {
 
-    @Shadow public abstract ITextComponent shadow$getName();
+    void bridge$parseSelector(SelectorType selectorType) throws CommandSyntaxException;
 
-    @Override
-    public ResourceKey getKey() {
-        return ((ResourceKeyBridge) this).bridge$getKey();
-    }
+    void bridge$handleValue(String id, String input, Tristate shouldInvert) throws CommandSyntaxException;
 
-    @Override
-    public Component asComponent() {
-        return SpongeAdventure.asAdventure(this.shadow$getName());
-    }
 }

@@ -22,30 +22,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.mixin.api.mcp.entity;
+package org.spongepowered.common.accessor.command.arguments;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.util.text.ITextComponent;
-import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
+import net.minecraft.command.arguments.EntityOptions;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.adventure.SpongeAdventure;
-import org.spongepowered.common.bridge.ResourceKeyBridge;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(net.minecraft.entity.EntityType.class)
-public abstract class EntityTypeMixin_API<T extends Entity> implements EntityType<T> {
+import java.util.Map;
 
-    @Shadow public abstract ITextComponent shadow$getName();
+@Mixin(EntityOptions.class)
+public interface EntityOptionsAccessor {
 
-    @Override
-    public ResourceKey getKey() {
-        return ((ResourceKeyBridge) this).bridge$getKey();
+    // The type is actually Map<String, EntityOptions.EntityOptions>, but the inner class is
+    // package private and we just need the accessor anyway.
+    @Accessor("REGISTRY")
+    static Map<String, EntityOptions_OptionHandlerAccessor> accessor$getREGISTRY() {
+        throw new AssertionError("This should not be called.");
     }
 
-    @Override
-    public Component asComponent() {
-        return SpongeAdventure.asAdventure(this.shadow$getName());
-    }
 }

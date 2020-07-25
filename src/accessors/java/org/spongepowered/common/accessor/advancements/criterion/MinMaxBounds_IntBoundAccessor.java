@@ -22,30 +22,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.mixin.api.mcp.entity;
+package org.spongepowered.common.accessor.advancements.criterion;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.util.text.ITextComponent;
-import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.adventure.SpongeAdventure;
-import org.spongepowered.common.bridge.ResourceKeyBridge;
+import org.spongepowered.asm.mixin.gen.Invoker;
 
-@Mixin(net.minecraft.entity.EntityType.class)
-public abstract class EntityTypeMixin_API<T extends Entity> implements EntityType<T> {
+import javax.annotation.Nullable;
 
-    @Shadow public abstract ITextComponent shadow$getName();
+@Mixin(MinMaxBounds.IntBound.class)
+public interface MinMaxBounds_IntBoundAccessor {
 
-    @Override
-    public ResourceKey getKey() {
-        return ((ResourceKeyBridge) this).bridge$getKey();
+    @Invoker("<init>")
+    static MinMaxBounds.IntBound accessor$init(@Nullable final Integer p_i49717_1_, @Nullable final Integer p_i49717_2_) {
+        throw new AssertionError("should not happen");
     }
 
-    @Override
-    public Component asComponent() {
-        return SpongeAdventure.asAdventure(this.shadow$getName());
-    }
 }

@@ -22,30 +22,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.mixin.api.mcp.entity;
+package org.spongepowered.common.accessor.command.arguments;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.util.text.ITextComponent;
-import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
+import net.minecraft.command.arguments.EntityOptions;
+import net.minecraft.command.arguments.EntitySelectorParser;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.adventure.SpongeAdventure;
-import org.spongepowered.common.bridge.ResourceKeyBridge;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-@Mixin(net.minecraft.entity.EntityType.class)
-public abstract class EntityTypeMixin_API<T extends Entity> implements EntityType<T> {
+import java.util.function.Predicate;
 
-    @Shadow public abstract ITextComponent shadow$getName();
+@Mixin(targets = "net.minecraft.command.arguments.EntityOptions$OptionHandler")
+public interface EntityOptions_OptionHandlerAccessor {
 
-    @Override
-    public ResourceKey getKey() {
-        return ((ResourceKeyBridge) this).bridge$getKey();
-    }
+    @Accessor("handler")
+    EntityOptions.IFilter accessor$getHandler();
 
-    @Override
-    public Component asComponent() {
-        return SpongeAdventure.asAdventure(this.shadow$getName());
-    }
+    @Accessor("canHandle")
+    Predicate<EntitySelectorParser> accessor$getCanHandle();
+
 }

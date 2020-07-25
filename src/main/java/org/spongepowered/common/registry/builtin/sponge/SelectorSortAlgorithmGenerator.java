@@ -22,30 +22,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.spongepowered.common.mixin.api.mcp.entity;
+package org.spongepowered.common.registry.builtin.sponge;
 
-import net.kyori.adventure.text.Component;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.command.arguments.EntitySelectorParser;
 import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.common.adventure.SpongeAdventure;
-import org.spongepowered.common.bridge.ResourceKeyBridge;
+import org.spongepowered.api.command.selector.SelectorSortAlgorithm;
+import org.spongepowered.common.command.selector.SpongeSelectorSortAlgorithm;
 
-@Mixin(net.minecraft.entity.EntityType.class)
-public abstract class EntityTypeMixin_API<T extends Entity> implements EntityType<T> {
+import java.util.stream.Stream;
 
-    @Shadow public abstract ITextComponent shadow$getName();
+public final class SelectorSortAlgorithmGenerator {
 
-    @Override
-    public ResourceKey getKey() {
-        return ((ResourceKeyBridge) this).bridge$getKey();
+    private SelectorSortAlgorithmGenerator() {
     }
 
-    @Override
-    public Component asComponent() {
-        return SpongeAdventure.asAdventure(this.shadow$getName());
+    public static Stream<SelectorSortAlgorithm> stream() {
+        return Stream.of(
+                new SpongeSelectorSortAlgorithm(EntitySelectorParser.ARBITRARY, ResourceKey.minecraft("arbitrary")),
+                new SpongeSelectorSortAlgorithm(EntitySelectorParser.FURTHEST, ResourceKey.minecraft("furthest")),
+                new SpongeSelectorSortAlgorithm(EntitySelectorParser.NEAREST, ResourceKey.minecraft("nearest")),
+                new SpongeSelectorSortAlgorithm(EntitySelectorParser.RANDOM, ResourceKey.minecraft("random"))
+        );
     }
+
 }
