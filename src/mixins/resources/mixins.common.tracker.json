@@ -13,6 +13,7 @@
     "entity.EntityTypeMixin_Tracker",
     "entity.player.PlayerInventoryMixin_Tracker",
     "event.TraitMixin_Tracked_Inventory",
+    "server.management.PlayerInteractionManagerMixin_Tracker",
     "tileentity.TileEntityMixin_Tracker",
     "world.WorldMixin_Tracker",
     "world.chunk.ChunkMixin_Tracker",
