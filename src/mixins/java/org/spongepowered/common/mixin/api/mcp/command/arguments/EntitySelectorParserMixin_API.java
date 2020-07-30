@@ -123,6 +123,7 @@ public abstract class EntitySelectorParserMixin_API implements Selector.Builder 
     @Shadow public abstract void shadow$setDz(double dzIn);
     @Shadow public abstract void shadow$setIncludeNonPlayers(boolean includeNonPlayers);
     @Shadow public abstract EntitySelector shadow$build();
+    @Shadow public abstract void shadow$addFilter(Predicate<Entity> p_197401_1_);
 
     @Nullable private Map<String, Range<@NonNull Integer>> api$scores;
     @Nullable private Object2BooleanOpenHashMap<String> api$advancement;
@@ -345,6 +346,12 @@ public abstract class EntitySelectorParserMixin_API implements Selector.Builder 
     @Override
     public Selector.@NonNull Builder setYaw(@NonNull final Range<@NonNull Double> range) {
         this.yRotation = this.api$getWrappedBounds(range);
+        return this;
+    }
+
+    @Override
+    public Selector.@NonNull Builder filter(@NonNull final Predicate<org.spongepowered.api.entity.@NonNull Entity> filter) {
+        this.shadow$addFilter((Predicate<Entity>) (Object) filter);
         return this;
     }
 
