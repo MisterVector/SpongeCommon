@@ -24,24 +24,24 @@
  */
 package org.spongepowered.common.registry.builtin.sponge;
 
-import net.minecraft.command.arguments.EntitySelectorParser;
 import org.spongepowered.api.ResourceKey;
-import org.spongepowered.api.command.selector.SelectorSortAlgorithm;
-import org.spongepowered.common.command.selector.SpongeSelectorSortAlgorithm;
+import org.spongepowered.api.command.selector.SelectorType;
+import org.spongepowered.common.command.selector.SpongeSelectorType;
 
 import java.util.stream.Stream;
 
-public final class SelectorSortAlgorithmGenerator {
+public final class SelectorTypeStreamGenerator {
 
-    private SelectorSortAlgorithmGenerator() {
+    private SelectorTypeStreamGenerator() {
     }
 
-    public static Stream<SelectorSortAlgorithm> stream() {
+    public static Stream<SelectorType> stream() {
         return Stream.of(
-                new SpongeSelectorSortAlgorithm(EntitySelectorParser.ARBITRARY, ResourceKey.minecraft("arbitrary")),
-                new SpongeSelectorSortAlgorithm(EntitySelectorParser.FURTHEST, ResourceKey.minecraft("furthest")),
-                new SpongeSelectorSortAlgorithm(EntitySelectorParser.NEAREST, ResourceKey.minecraft("nearest")),
-                new SpongeSelectorSortAlgorithm(EntitySelectorParser.RANDOM, ResourceKey.minecraft("random"))
+            new SpongeSelectorType("@a", ResourceKey.minecraft("all_players")),
+            new SpongeSelectorType("@e", ResourceKey.minecraft("all_entities")),
+            new SpongeSelectorType("@p", ResourceKey.minecraft("nearest_player")),
+            new SpongeSelectorType("@r", ResourceKey.minecraft("random_player")),
+            new SpongeSelectorType("@s", ResourceKey.minecraft("source"))
         );
     }
 

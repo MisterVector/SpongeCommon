@@ -179,8 +179,8 @@ import org.spongepowered.common.registry.builtin.sponge.PhaseTypeRegistrar;
 import org.spongepowered.common.registry.builtin.sponge.PortalAgentTypeStreamGenerator;
 import org.spongepowered.common.registry.builtin.sponge.QueryTypeStreamGenerator;
 import org.spongepowered.common.registry.builtin.sponge.RabbitTypeStreamGenerator;
-import org.spongepowered.common.registry.builtin.sponge.SelectorSortAlgorithmGenerator;
-import org.spongepowered.common.registry.builtin.sponge.SelectorTypeGenerator;
+import org.spongepowered.common.registry.builtin.sponge.SelectorSortAlgorithmStreamGenerator;
+import org.spongepowered.common.registry.builtin.sponge.SelectorTypeStreamGenerator;
 import org.spongepowered.common.registry.builtin.sponge.SerializationBehaviorStreamGenerator;
 import org.spongepowered.common.registry.builtin.sponge.SpawnTypeStreamGenerator;
 import org.spongepowered.common.registry.builtin.sponge.WoodTypeStreamGenerator;
@@ -515,8 +515,8 @@ public final class SpongeCatalogRegistry implements CatalogRegistry {
             .generateRegistry(QueryType.class, ResourceKey.sponge("query_type"), QueryTypeStreamGenerator.stream(), true, true)
             .generateRegistry(RaidStatus.class, ResourceKey.minecraft("raid_status"), Arrays.stream(Raid.Status.values()), true, false)
             .generateRegistry(RailDirection.class, ResourceKey.minecraft("rail_direction"), Arrays.stream(RailShape.values()), true, false)
-            .generateRegistry(SelectorSortAlgorithm.class, ResourceKey.minecraft("selector_sort_algorithm"), SelectorSortAlgorithmGenerator.stream(), true, false)
-            .generateRegistry(SelectorType.class, ResourceKey.minecraft("selector_type"), SelectorTypeGenerator.stream(), true, false)
+            .generateRegistry(SelectorSortAlgorithm.class, ResourceKey.minecraft("selector_sort_algorithm"), SelectorSortAlgorithmStreamGenerator.stream(), true, false)
+            .generateRegistry(SelectorType.class, ResourceKey.minecraft("selector_type"), SelectorTypeStreamGenerator.stream(), true, false)
             .generateRegistry(SerializationBehavior.class, ResourceKey.sponge("serialization_behavior"), SerializationBehaviorStreamGenerator.stream(), true, false)
             .generateRegistry(SlabPortion.class, ResourceKey.minecraft("slab_portion"), Arrays.stream(SlabType.values()), true, false)
             .generateRegistry(SpawnType.class, ResourceKey.sponge("spawn_type"), SpawnTypeStreamGenerator.stream(), true, true)
