@@ -24,12 +24,13 @@
  */
 package org.spongepowered.common.util;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.spongepowered.api.util.Range;
 
-public class SpongeRange<T extends Number> implements Range<T> {
+public final class SpongeRange<T extends Number> implements Range<T> {
 
-    public static final SpongeFactory FACTORY_INSTANCE = new SpongeFactory();
+    public static final RangeFactory FACTORY_INSTANCE = new RangeFactory();
 
     @Nullable private final T min;
     @Nullable private final T max;
@@ -43,19 +44,22 @@ public class SpongeRange<T extends Number> implements Range<T> {
     }
 
     @Override
+    @Nullable
     public T getMin() {
         return this.min;
     }
 
     @Override
+    @Nullable
     public T getMax() {
         return this.max;
     }
 
-    public static class SpongeFactory implements Factory {
+    public final static class RangeFactory implements Factory {
 
         @Override
-        public Range<Integer> intRange(@Nullable final Integer min, @Nullable final Integer max) {
+        @NonNull
+        public Range<@NonNull Integer> intRange(@Nullable final Integer min, @Nullable final Integer max) {
             if (min != null && max != null && max > min) {
                 // nope
                 throw new IllegalArgumentException("min must be smaller or equal to max if both are defined");
@@ -64,7 +68,8 @@ public class SpongeRange<T extends Number> implements Range<T> {
         }
 
         @Override
-        public Range<Double> doubleRange(@Nullable final Double min, @Nullable final Double max) {
+        @NonNull
+        public Range<@NonNull Double> doubleRange(@Nullable final Double min, @Nullable final Double max) {
             if (min != null && max != null && max > min) {
                 // nope
                 throw new IllegalArgumentException("min must be smaller or equal to max if both are defined");

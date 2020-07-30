@@ -25,6 +25,7 @@
 package org.spongepowered.common.command.selector;
 
 import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.arguments.EntitySelectorParser;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.ResourceKey;
@@ -34,31 +35,39 @@ import org.spongepowered.common.accessor.command.arguments.EntitySelectorParserA
 
 public final class SpongeSelectorType implements SelectorType {
 
-    private final String selectorKey;
+    private final String selectorToken;
     private final ResourceKey resourceKey;
+    private final Selector selector;
 
     public SpongeSelectorType(
-            final String selectorKey,
+            final String selectorToken,
             final ResourceKey resourceKey) {
-        this.selectorKey = selectorKey;
+        this.selectorToken = selectorToken;
         this.resourceKey = resourceKey;
+        try {
+            this.selector = (Selector) new EntitySelectorParser(new StringReader(this.selectorToken)).parse();
+        } catch (final CommandSyntaxException exception) {
+            // This should never happen, if it does, it's a bug in our code.
+            throw new RuntimeException(exception);
+        }
     }
 
     @Override
-    public final String selectorKey() {
-        return this.selectorKey;
+    @NonNull
+    public final String selectorToken() {
+        return this.selectorToken;
     }
 
     @Override
     @NonNull
     public final Selector toSelector() {
-        return this.toBuilder().build();
+        return this.selector;
     }
 
     @SuppressWarnings("ConstantConditions")
     @Override
     public final Selector.@NonNull Builder toBuilder() {
-        final EntitySelectorParser parser = new EntitySelectorParser(new StringReader(this.selectorKey));
+        final EntitySelectorParser parser = new EntitySelectorParser(new StringReader(this.selectorToken));
         ((EntitySelectorParserAccessor) parser).accessor$parseSelector();
         return (Selector.Builder) parser;
     }

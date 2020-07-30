@@ -34,10 +34,8 @@ import java.util.function.Predicate;
 @Mixin(targets = "net.minecraft.command.arguments.EntityOptions$OptionHandler")
 public interface EntityOptions_OptionHandlerAccessor {
 
-    @Accessor("handler")
-    EntityOptions.IFilter accessor$getHandler();
+    @Accessor("handler") EntityOptions.IFilter accessor$getHandler();
 
-    @Accessor("canHandle")
-    Predicate<EntitySelectorParser> accessor$getCanHandle();
+    @Accessor("canHandle") Predicate<EntitySelectorParser> accessor$getCanHandle();
 
 }

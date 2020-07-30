@@ -34,7 +34,6 @@ import java.util.function.Supplier;
 @Mixin(ArgumentSerializer.class)
 public interface ArgumentSerializerAccessor<T extends ArgumentType<?>> {
 
-    @Accessor("factory")
-    Supplier<T> accessor$getFactory();
+    @Accessor("factory") Supplier<T> accessor$getFactory();
 
 }

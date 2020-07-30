@@ -54,7 +54,7 @@ public abstract class EntitySelectorParserMixin implements EntitySelectorParserB
     @Override
     public void bridge$parseSelector(final SelectorType selectorType) throws CommandSyntaxException {
         try {
-            this.impl$readerOverride = new StringReader(selectorType.selectorKey());
+            this.impl$readerOverride = new StringReader(selectorType.selectorToken());
             this.impl$readerOverride.skip(); // skip over the @ symbol
             this.shadow$parseSelector();
         } finally {
